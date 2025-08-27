@@ -1,0 +1,67 @@
+# CogniThreat CNN-LSTM Baseline Configuration
+# ===========================================
+
+# Data configuration
+data:
+  folder: "data"  # Use the existing data folder
+  files:
+    - "02-14-2018.csv"
+    - "02-15-2018.csv"
+    - "02-16-2018.csv"
+    - "02-20-2018.csv"
+    - "02-21-2018.csv"
+    - "02-22-2018.csv"
+    - "02-23-2018.csv"
+    - "02-28-2018.csv"
+    - "03-01-2018.csv"
+    - "03-02-2018.csv"
+  target: "Label"  # Target column name (adjust based on actual data)
+
+# Categorical features for encoding
+categorical_features:
+  - "ProtocolName"
+  - "Direction"
+  - "State"
+
+# Preprocessing configuration
+preprocessing:
+  imputation:
+    method: "simple"  # "simple" or "knn"
+    n_neighbors: 5
+  
+  encoding:
+    method: "onehot"  # "onehot" or "ordinal"
+  
+  scaling:
+    method: "standard"  # "standard" or "minmax"
+  
+  feature_engineering:
+    session_length: false
+    packet_rate: false
+    flag_frequency: false
+  
+  smote: true  # Apply SMOTE for class balancing
+
+# Feature selection configuration
+feature_selection:
+  method: "rf"  # "rf", "rfe", "mi", "correlation"
+  top_k: 15
+  corr_thresh: 0.95
+
+# Sequence configuration
+sequence:
+  length: 10  # Sequence length for CNN-LSTM
+
+# Model configuration
+model:
+  dropout: true
+  batchnorm: true
+
+# Training configuration
+training:
+  batch_size: 256
+  weight_decay: 1e-4
+  max_epochs: 100
+
+# Number of classes
+num_classes: 5  # Adjust based on actual data
