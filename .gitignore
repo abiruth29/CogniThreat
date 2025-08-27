@@ -124,11 +124,13 @@ src/baseline_dnn/artifacts/
 
 # Temporary and demo files
 demo.py
-test_*.py
 *_demo.py
 *_showcase.py
 *_backup.*
 *_report.txt
+
+# Exclude specific test files but keep legitimate tests
+test_installation.py
 
 # Log files
 *.log
