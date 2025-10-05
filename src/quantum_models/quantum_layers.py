@@ -251,7 +251,7 @@ class QuantumPooling(tf.keras.layers.Layer):
         return config
 
 
-def create_quantum_device(n_qubits: int, device_type: str = 'default.qubit') -> qml.Device:
+def create_quantum_device(n_qubits: int, device_type: str = 'default.qubit') -> qml.device:
     """
     Create a quantum device for circuit execution.
     

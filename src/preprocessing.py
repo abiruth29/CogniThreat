@@ -255,6 +255,44 @@ def get_feature_info(df: pd.DataFrame) -> Dict[str, Any]:
     return info
 
 
+def preprocess_cicids_data(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """
+    Complete preprocessing pipeline for CIC-IDS-2017 data.
+    
+    Args:
+        df: Raw CIC-IDS-2017 DataFrame
+        
+    Returns:
+        Tuple of (X_train, X_test, y_train, y_test)
+    """
+    logger.info("Starting complete CIC-IDS-2017 preprocessing pipeline...")
+    
+    # Clean and preprocess features
+    df_processed = preprocess_features(df)
+    
+    # Encode labels
+    df_encoded, encoding_info = encode_labels(df_processed)
+    
+    # Split features and labels
+    X, y = split_features_labels(df_encoded, target_column='Label_Binary')
+    
+    # Create train-test split
+    X_train, X_test, y_train, y_test = create_train_test_split(X, y)
+    
+    # Scale features
+    X_train_scaled, X_test_scaled, scaler = scale_features(X_train, X_test)
+    
+    # Convert to numpy arrays
+    y_train = y_train.values
+    y_test = y_test.values
+    
+    logger.info("CIC-IDS-2017 preprocessing pipeline completed")
+    logger.info(f"Final shapes - X_train: {X_train_scaled.shape}, X_test: {X_test_scaled.shape}")
+    logger.info(f"Final shapes - y_train: {y_train.shape}, y_test: {y_test.shape}")
+    
+    return X_train_scaled, X_test_scaled, y_train, y_test
+
+
 def memory_optimization(df: pd.DataFrame) -> pd.DataFrame:
     """
     Optimize DataFrame memory usage by downcasting numeric types.

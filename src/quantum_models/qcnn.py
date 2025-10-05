@@ -602,5 +602,3 @@ def demo_quantum_cnn():
     return model, history
 
 
-if __name__ == "__main__":
-    demo_quantum_cnn()

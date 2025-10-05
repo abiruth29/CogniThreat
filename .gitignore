@@ -99,38 +99,20 @@ qiskit.log
 # Streamlit
 .streamlit/
 
-# Data files (except configuration)
-data/*.csv
-data/*.pkl
-data/*.h5
-data/*.hdf5
+# Data files
+*.csv
+*.json
+*.pkl
+*.h5
+*.hdf5
 datasets/
 
-# Model files and artifacts
+# Model files
 models/
-artifacts/
 *.pt
 *.pth
 *.h5
 *.pb
-
-# Trained model artifacts (large files)
-src/baseline_dnn/artifacts/
-
-# Result files
-*_results.json
-*_comparison_results.json
-*_system_results.json
-
-# Temporary and demo files
-demo.py
-*_demo.py
-*_showcase.py
-*_backup.*
-*_report.txt
-
-# Exclude specific test files but keep legitimate tests
-test_installation.py
 
 # Log files
 *.log

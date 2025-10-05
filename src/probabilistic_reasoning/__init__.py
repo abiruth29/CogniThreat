@@ -1,52 +1,25 @@
 """
-Probabilistic Reasoning Module for CogniThreat
-=============================================
+Probabilistic Reasoning Module for CogniThreat NIDS
 
-This module implements Bayesian networks and probabilistic reasoning
-for uncertainty quantification in network intrusion detection.
-
-Modules:
-    bayesian_network: Core Bayesian network implementation
-    uncertainty_quantification: Uncertainty analysis and confidence scoring
-    probabilistic_inference: Inference engines for probability calculations
-    
-Author: CogniThreat Team
-Date: August 2025
+This module implements Bayesian inference, uncertainty quantification,
+and risk-based decision making for network intrusion detection.
 """
 
-from .bayesian_network import (
-    CogniThreatBayesianNetwork,
-    NetworkSecurityBN,
-    create_intrusion_detection_bn
-)
-
-from .uncertainty_quantification import (
-    UncertaintyQuantifier,
-    confidence_analysis,
-    calculate_prediction_confidence
-)
-
-from .probabilistic_inference import (
-    BayesianInferenceEngine,
-    ProbabilisticClassifier,
-    adaptive_threshold_learning
-)
+from .fusion import bayesian_fusion, ensemble_uncertainty
+from .risk_inference import risk_score, compute_decision_threshold, create_cost_matrix
+from .uncertainty import MCDropoutPredictor, predictive_entropy
+from .pipeline import ProbabilisticPipeline, quick_probabilistic_analysis
 
 __all__ = [
-    # Bayesian Networks
-    'CogniThreatBayesianNetwork',
-    'NetworkSecurityBN', 
-    'create_intrusion_detection_bn',
-    
-    # Uncertainty Quantification
-    'UncertaintyQuantifier',
-    'confidence_analysis',
-    'calculate_prediction_confidence',
-    
-    # Probabilistic Inference
-    'BayesianInferenceEngine',
-    'ProbabilisticClassifier',
-    'adaptive_threshold_learning'
+    'bayesian_fusion',
+    'ensemble_uncertainty',
+    'risk_score',
+    'compute_decision_threshold',
+    'create_cost_matrix',
+    'MCDropoutPredictor',
+    'predictive_entropy',
+    'ProbabilisticPipeline',
+    'quick_probabilistic_analysis'
 ]
 
-__version__ = "1.0.0"
+__version__ = '1.0.0'
