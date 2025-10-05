@@ -113,7 +113,7 @@ git init
 git add .
 git commit -m "Initial commit: CogniThreat QCNN-QLSTM NIDS with Probabilistic Reasoning"
 git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/CogniThreat.git
+git remote add origin https://github.com/abiruth29/CogniThreat.git
 git push -u origin main
 ```
 
