@@ -57,6 +57,15 @@ Our quantum-inspired hybrid model with probabilistic reasoning consistently outp
 - **Risk Scoring**: Expected cost minimization for alert prioritization
 - **Decision Theory**: Bayes-optimal classification under cost constraints
 
+### Temporal Reasoning Module ⏱️ (NEW)
+- **Hidden Markov Models (HMM)**: Latent attack stage modeling with Baum-Welch training
+- **Markov Chains**: Observable state sequence prediction
+- **Event Encoding**: Discrete symbol mapping for continuous network features
+- **Attack Forecasting**: Multi-step ahead attack progression prediction
+- **Viterbi Decoding**: Most likely attack stage sequence inference
+- **Online Learning**: Adaptive model updates with streaming data
+- **Integration API**: Seamless connection with probabilistic reasoning engine
+
 ## 📋 Requirements
 
 ```
@@ -78,17 +87,27 @@ CogniThreat/
 ├── src/
 │   ├── preprocessing.py            # Data preprocessing pipeline
 │   ├── hybrid_quantum_model.py     # Quantum CNN-LSTM implementation
-│   ├── probabilistic_reasoning/    # 🆕 Probabilistic Reasoning Module
+│   ├── probabilistic_reasoning/    # Probabilistic Reasoning Module
 │   │   ├── __init__.py
 │   │   ├── fusion.py               # Bayesian model fusion
 │   │   ├── uncertainty.py          # MC Dropout, entropy measures
 │   │   ├── risk_inference.py       # Risk scoring, cost matrices
 │   │   └── pipeline.py             # Unified PR pipeline
+│   ├── temporal_reasoning/         # 🆕 Temporal Event Sequence Modeling
+│   │   ├── __init__.py
+│   │   ├── markov_chain.py         # Observable state Markov Chain
+│   │   ├── hmm_model.py            # Hidden Markov Model (HMM)
+│   │   ├── event_encoder.py        # Event discretization
+│   │   ├── temporal_predictor.py   # High-level prediction API
+│   │   └── demo_integration.py     # Integration demonstration
 │   ├── quantum_models/             # Quantum layer implementations
 │   └── baseline_dnn/
 │       └── cnn_lstm_baseline.py    # Classical baseline model
 ├── data/CIC-IDS-2017/             # Dataset files
 ├── config/                         # Configuration files
+├── tests/                          # Unit tests
+│   ├── test_temporal_reasoning.py  # Temporal module tests
+│   └── ...
 └── EXECUTION_GUIDE.md              # Detailed usage guide
 ```
 
@@ -113,6 +132,14 @@ Uses the comprehensive **CIC-IDS-2017** cybersecurity dataset:
 - **Mutual Information**: Entropy-based uncertainty quantification
 - **Risk Score**: Expected cost under misclassification
 - **Cost-Sensitive Accuracy**: Performance under asymmetric costs
+
+### Temporal Reasoning Metrics (NEW)
+- **Sequence Prediction Accuracy**: Correct next-state prediction rate
+- **Viterbi Path Accuracy**: Most likely state sequence correctness
+- **Transition Entropy**: Uncertainty in state transitions
+- **Forecast Confidence**: Multi-step prediction reliability
+- **Attack Stage Detection**: Reconnaissance/Exploitation/Exfiltration identification
+- **Early Warning Rate**: Detection before critical attack stages
 
 ## 🎓 Research Impact
 
@@ -147,6 +174,48 @@ This project demonstrates practical quantum + probabilistic advantages in cybers
 ✅ **Uncertainty decomposition reveals when model needs more training data**
 ✅ **Risk-based prioritization reduces SOC analyst workload by focusing on high-risk alerts**
 ✅ **Bayesian fusion outperforms individual models (ensemble advantage)**
-✅ **Cost-sensitive decisions minimize operational impact of false negatives**---
+✅ **Cost-sensitive decisions minimize operational impact of false negatives**
+
+### Temporal Reasoning Excellence (NEW)
+✅ **Attack progression forecasting provides early warning before critical stages**
+✅ **HMM captures latent attack phases invisible to point-in-time classifiers**
+✅ **Markov models reveal temporal attack patterns and transition dynamics**
+✅ **Event sequence modeling improves context-aware detection**
+✅ **Online learning adapts to evolving attack strategies**
+✅ **Integration with quantum+Bayesian models creates comprehensive defense system**
+
+## 🚀 Using Temporal Reasoning
+
+```python
+from src.temporal_reasoning import TemporalPredictor
+
+# Initialize predictor with HMM
+predictor = TemporalPredictor(
+    model_type='hmm',
+    num_states=5,  # Normal, Recon, Exploit, Lateral, Exfiltration
+    num_observations=10,
+    encoding_type='clustering'
+)
+
+# Train on event sequences
+predictor.fit(event_sequences, state_sequences)
+
+# Predict next attack stage
+state_idx, state_name, confidence = predictor.predict_next_state(current_events)
+
+# Forecast attack progression
+states, names, confidences = predictor.predict_attack_sequence(
+    initial_events=[...],
+    horizon=5
+)
+
+# Integrate with probabilistic reasoning
+temporal_context = predictor.receive_temporal_context(event_sequence)
+# Pass to Bayesian fusion for combined prediction
+```
+
+See **`src/temporal_reasoning/demo_integration.py`** for complete integration example.
+
+---
 
 *This project demonstrates the practical advantages of quantum-inspired machine learning for next-generation network intrusion detection systems.*
