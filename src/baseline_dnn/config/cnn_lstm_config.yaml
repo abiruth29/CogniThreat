@@ -1,0 +1,33 @@
+categorical_features:
+- ProtocolName
+- Direction
+- State
+data:
+  files:
+  - 02-14-2018.csv
+  - 02-15-2018.csv
+  - 02-16-2018.csv
+  folder: data
+  target: Label
+feature_selection:
+  method: rf
+  top_k: 15
+model:
+  batchnorm: true
+  dropout: true
+num_classes: 5
+preprocessing:
+  encoding:
+    method: onehot
+  feature_engineering:
+    session_length: false
+  imputation:
+    method: simple
+  scaling:
+    method: standard
+  smote: true
+sequence:
+  length: 10
+training:
+  batch_size: 256
+  weight_decay: 0.0001
