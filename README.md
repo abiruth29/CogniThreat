@@ -15,12 +15,25 @@ This project integrates two critical machine learning paradigms:
 
 ## 🚀 Quick Start
 
+### Prerequisites
+Install the required dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+### Running the Comparison
 ```bash
 # Complete comparison with both models
 python main.py --sample-size 5000 --model both
 
 # View all options
 python main.py --help
+```
+
+### Advanced Simulations
+For full pipeline simulations including HMM temporal reasoning and advanced calibration reports:
+```bash
+python scripts/run_full_pipeline.py
 ```
 
 ## 📊 Key Results
@@ -66,49 +79,31 @@ Our quantum-inspired hybrid model with probabilistic reasoning consistently outp
 - **Online Learning**: Adaptive model updates with streaming data
 - **Integration API**: Seamless connection with probabilistic reasoning engine
 
-## 📋 Requirements
-
-```
-tensorflow>=2.10.0
-pandas>=1.5.0
-scikit-learn>=1.1.0
-numpy>=1.21.0
-pennylane>=0.28.0
-plotly>=5.0.0
-seaborn>=0.11.0
-```
-
 ## 📁 Project Structure
 
 ```
 CogniThreat/
 ├── main.py                         # Main comparison script
-├── CogniThreat_Pipeline_Demo.ipynb # Interactive pipeline demonstration
-├── src/
+├── config/                         # Configuration files
+├── data/                           # Dataset files (CIC-IDS-2017)
+├── docs/                           # Documentation and guides
+│   ├── DATA_FLOW_SUMMARY.md        # Detailed data flow explanation
+│   └── references/                 # Research references
+├── notebooks/                      # Jupyter notebooks
+│   └── CogniThreat_Pipeline_Demo.ipynb
+├── project_report/                 # Generated reports and metrics
+├── scripts/                        # Utility and simulation scripts
+│   ├── run_full_pipeline.py        # Full simulation pipeline
+│   ├── comprehensive_demo.py
+│   └── generate_architecture_diagrams.py
+├── src/                            # Source code
 │   ├── preprocessing.py            # Data preprocessing pipeline
 │   ├── hybrid_quantum_model.py     # Quantum CNN-LSTM implementation
 │   ├── probabilistic_reasoning/    # Probabilistic Reasoning Module
-│   │   ├── __init__.py
-│   │   ├── fusion.py               # Bayesian model fusion
-│   │   ├── uncertainty.py          # MC Dropout, entropy measures
-│   │   ├── risk_inference.py       # Risk scoring, cost matrices
-│   │   └── pipeline.py             # Unified PR pipeline
-│   ├── temporal_reasoning/         # 🆕 Temporal Event Sequence Modeling
-│   │   ├── __init__.py
-│   │   ├── markov_chain.py         # Observable state Markov Chain
-│   │   ├── hmm_model.py            # Hidden Markov Model (HMM)
-│   │   ├── event_encoder.py        # Event discretization
-│   │   ├── temporal_predictor.py   # High-level prediction API
-│   │   └── demo_integration.py     # Integration demonstration
+│   ├── temporal_reasoning/         # Temporal Event Sequence Modeling
 │   ├── quantum_models/             # Quantum layer implementations
-│   └── baseline_dnn/
-│       └── cnn_lstm_baseline.py    # Classical baseline model
-├── data/CIC-IDS-2017/             # Dataset files
-├── config/                         # Configuration files
-├── tests/                          # Unit tests
-│   ├── test_temporal_reasoning.py  # Temporal module tests
-│   └── ...
-└── EXECUTION_GUIDE.md              # Detailed usage guide
+│   └── baseline_dnn/               # Classical baseline model
+└── tests/                          # Unit tests
 ```
 
 ## 🔬 Datasets
@@ -158,7 +153,7 @@ This project demonstrates practical quantum + probabilistic advantages in cybers
 
 ## 📚 Documentation
 
-- **[EXECUTION_GUIDE.md](EXECUTION_GUIDE.md)**: Comprehensive usage instructions
+- **[Data Flow Summary](docs/DATA_FLOW_SUMMARY.md)**: Comprehensive explanation of the pipeline from packet to decision.
 - **Command Line Help**: `python main.py --help`
 - **Code Documentation**: Inline docstrings and type hints
 
@@ -215,6 +210,10 @@ temporal_context = predictor.receive_temporal_context(event_sequence)
 ```
 
 See **`src/temporal_reasoning/demo_integration.py`** for complete integration example.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ---
 

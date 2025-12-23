@@ -32,7 +32,7 @@ if sys.platform == 'win32':
     sys.stderr.reconfigure(encoding='utf-8')
 
 # Add src to path
-sys.path.append(str(Path(__file__).parent / "src"))
+sys.path.append(str(Path(__file__).parent.parent / "src"))
 
 def print_section(title, char="="):
     """Print formatted section header."""

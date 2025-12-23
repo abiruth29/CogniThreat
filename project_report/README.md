@@ -8,34 +8,9 @@ This directory contains the complete IEEE-standard project report for CogniThrea
 
 ## 📁 Files Included
 
-### 1. Main Report
-- **`CogniThreat_IEEE_Report.tex`** - LaTeX source file (IEEE conference format)
-- **`CogniThreat_IEEE_Report.pdf`** - Compiled PDF report (generate using instructions below)
-
-### 2. Supporting Documents
-- **`README.md`** - This file
-- **`compile_instructions.md`** - How to compile the LaTeX report
-- **`project_summary.md`** - Executive summary for quick review
-
----
-
-## 📊 Report Contents
-
 The IEEE report includes the following sections:
 
 1. **Abstract** - Overview of CogniThreat system and key results
-2. **Introduction** - Background, motivation, problem statement, contributions
-3. **Related Work** - Deep learning for IDS, quantum ML, uncertainty quantification
-4. **Methodology** - System architecture, quantum CNN/LSTM, Bayesian reasoning
-5. **Experimental Setup** - Dataset details, implementation, baselines
-6. **Results and Analysis** - Performance metrics, uncertainty analysis, ablation study
-7. **Discussion** - Quantum advantage analysis, scalability, limitations
-8. **Conclusion** - Summary and future work
-9. **References** - 12 peer-reviewed citations
-
----
-
-## 🎯 Key Highlights
 
 ### Performance Results
 - ✅ **96.8% Detection Accuracy** (2.5% improvement over classical baseline)
@@ -141,16 +116,16 @@ Place image files in the same directory as the `.tex` file.
 - **Line Spacing**: Single-spaced
 
 ### Section Breakdown
-| Section | Pages | Content |
-|---------|-------|---------|
-| Abstract | 0.25 | High-level overview |
-| Introduction | 1.0 | Background, motivation, contributions |
-| Related Work | 0.75 | Literature review (3 subsections) |
-| Methodology | 2.0 | System architecture, algorithms |
-| Experiments | 1.5 | Setup, datasets, baselines |
-| Results | 1.5 | Performance analysis, tables |
-| Discussion | 0.75 | Interpretation, limitations |
-| Conclusion | 0.25 | Summary, future work |
+| Section      | Pages | Content                               |
+| ------------ | ----- | ------------------------------------- |
+| Abstract     | 0.25  | High-level overview                   |
+| Introduction | 1.0   | Background, motivation, contributions |
+| Related Work | 0.75  | Literature review (3 subsections)     |
+| Methodology  | 2.0   | System architecture, algorithms       |
+| Experiments  | 1.5   | Setup, datasets, baselines            |
+| Results      | 1.5   | Performance analysis, tables          |
+| Discussion   | 0.75  | Interpretation, limitations           |
+| Conclusion   | 0.25  | Summary, future work                  |
 
 ---
 

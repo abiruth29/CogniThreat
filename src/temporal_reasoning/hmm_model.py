@@ -459,6 +459,169 @@ class HMMChain:
         
         return entropy
     
+    def fit_time_split(
+        self,
+        sequences: List[List[int]],
+        train_ratio: float = 0.8,
+        state_sequences: Optional[List[List[int]]] = None,
+        **kwargs
+    ) -> Tuple['HMMChain', dict]:
+        """
+        Fit HMM with proper temporal train/test split.
+        
+        This method ensures no data leakage by training on early sequences
+        and evaluating on later sequences (time-based split).
+        
+        Args:
+            sequences: List of observation sequences
+            train_ratio: Proportion for training (default 0.8)
+            state_sequences: Optional true state sequences
+            **kwargs: Arguments for fit()
+            
+        Returns:
+            self: Trained model
+            split_info: Dictionary with train/test indices
+        """
+        n_sequences = len(sequences)
+        split_idx = int(n_sequences * train_ratio)
+        
+        train_seqs = sequences[:split_idx]
+        test_seqs = sequences[split_idx:]
+        
+        train_states = None
+        test_states = None
+        if state_sequences is not None:
+            train_states = state_sequences[:split_idx]
+            test_states = state_sequences[split_idx:]
+        
+        # Fit on training data only
+        self.fit(train_seqs, train_states, **kwargs)
+        
+        split_info = {
+            'train_indices': list(range(split_idx)),
+            'test_indices': list(range(split_idx, n_sequences)),
+            'train_size': len(train_seqs),
+            'test_size': len(test_seqs),
+            'test_sequences': test_seqs,
+            'test_states': test_states
+        }
+        
+        logger.info(f"Time-split training: {len(train_seqs)} train, {len(test_seqs)} test")
+        
+        return self, split_info
+    
+    def evaluate_forecasting(
+        self,
+        test_sequences: List[List[int]],
+        test_states: Optional[List[List[int]]] = None,
+        horizon: int = 1
+    ) -> dict:
+        """
+        Evaluate HMM forecasting on held-out test sequences.
+        
+        This method evaluates next-state prediction accuracy on sequences
+        not seen during training, providing unbiased performance estimates.
+        
+        Args:
+            test_sequences: Held-out observation sequences
+            test_states: Optional true state sequences for supervised evaluation
+            horizon: Prediction horizon (steps ahead to predict)
+            
+        Returns:
+            metrics: Dictionary with forecasting metrics
+        """
+        predictions = []
+        actuals = []
+        confidences = []
+        log_probs = []
+        
+        for i, obs_seq in enumerate(test_sequences):
+            if len(obs_seq) <= horizon:
+                continue
+            
+            # Use sequence up to t to predict state at t+horizon
+            for t in range(len(obs_seq) - horizon):
+                context = obs_seq[:t+1]
+                
+                # Predict next state
+                pred_state, conf = self.predict_next_state(context)
+                predictions.append(pred_state)
+                confidences.append(conf)
+                
+                # If we have true states, compare
+                if test_states is not None:
+                    true_state = test_states[i][t + horizon]
+                    actuals.append(true_state)
+                
+                # Compute sequence probability as quality metric
+                log_probs.append(self.compute_sequence_probability(context))
+        
+        metrics = {
+            'n_predictions': len(predictions),
+            'mean_confidence': float(np.mean(confidences)) if confidences else 0,
+            'mean_log_prob': float(np.mean(log_probs)) if log_probs else 0,
+            'horizon': horizon
+        }
+        
+        if test_states is not None and actuals:
+            predictions = np.array(predictions)
+            actuals = np.array(actuals)
+            
+            accuracy = np.mean(predictions == actuals)
+            metrics['accuracy'] = float(accuracy)
+            
+            # Per-state metrics
+            for state in range(self.num_hidden_states):
+                state_mask = actuals == state
+                if np.any(state_mask):
+                    state_acc = np.mean(predictions[state_mask] == state)
+                    metrics[f'accuracy_state_{self.state_names[state]}'] = float(state_acc)
+        
+        return metrics
+    
+    def validate_no_label_leakage(
+        self,
+        observation_source: str
+    ) -> bool:
+        """
+        Validate that observations are not derived from true labels.
+        
+        This is a documentation/validation helper to ensure proper usage.
+        
+        Args:
+            observation_source: Description of how observations were generated
+            
+        Returns:
+            is_valid: True if source appears valid (no leakage)
+            
+        Valid sources:
+        - 'features': Observations from network features
+        - 'predictions': Observations from model predictions
+        - 'clustering': Observations from unsupervised clustering
+        
+        Invalid sources:
+        - 'labels': Observations directly from true attack labels
+        - 'attack_types': Observations from ground truth attack types
+        """
+        valid_sources = ['features', 'predictions', 'clustering', 
+                        'embeddings', 'anomaly_scores']
+        invalid_sources = ['labels', 'attack_types', 'ground_truth', 'y_true']
+        
+        source_lower = observation_source.lower()
+        
+        if any(inv in source_lower for inv in invalid_sources):
+            logger.error(f"LABEL LEAKAGE DETECTED: Observations from '{observation_source}' "
+                        f"likely contain ground truth information!")
+            return False
+        
+        if any(val in source_lower for val in valid_sources):
+            logger.info(f"Observation source '{observation_source}' appears valid")
+            return True
+        
+        logger.warning(f"Unknown observation source '{observation_source}'. "
+                      f"Verify manually that observations are not from true labels.")
+        return True  # Don't block, but warn
+    
     def save(self, filepath: str) -> None:
         """Save model to file."""
         model_data = {
@@ -498,3 +661,4 @@ class HMMChain:
     def __repr__(self) -> str:
         return (f"HMMChain(states={self.num_hidden_states}, "
                 f"observations={self.num_observations})")
+

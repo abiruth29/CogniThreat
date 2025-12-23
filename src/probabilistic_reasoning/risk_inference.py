@@ -3,6 +3,15 @@ Risk-Based Decision Making Module
 
 Implements expected cost minimization and risk scoring for
 network intrusion detection alert prioritization.
+
+Default Cost Ratio Justification:
+    The default C_FN = 10 × C_FP ratio is based on SOC cost analysis.
+    For detailed justification and sensitivity analysis, see:
+    - cost_sensitivity.get_cost_ratio_justification()
+    - cost_sensitivity.cost_sensitivity_analysis()
+    
+Reference:
+    Elkan (2001) "The Foundations of Cost-Sensitive Learning"
 """
 
 import numpy as np
